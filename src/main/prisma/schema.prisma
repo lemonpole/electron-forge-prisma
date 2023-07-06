@@ -1,0 +1,43 @@
+// ----------------------------------------------------------
+// A generator determines which assets are created
+// when you run the prisma generate command
+// ----------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+// ----------------------------------------------------------
+// A data source determines how Prisma connects your database
+// ----------------------------------------------------------
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:databases/save_0.db"
+}
+
+
+// ----------------------------------------------------------
+// Models represent the entities of your application domain
+// ----------------------------------------------------------
+
+model Continent {
+  id            Int         @id @default(autoincrement())
+  name          String      @unique
+  code          String      @unique
+
+  // has many
+  countries     Country[]
+}
+
+
+model Country {
+  id            Int         @id @default(autoincrement())
+  name          String      @unique
+  code          String      @unique
+
+  // belongs to
+  continentId   Int
+  continent     Continent   @relation(fields: [continentId], references: [id])
+}
