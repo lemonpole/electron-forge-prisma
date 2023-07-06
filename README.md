@@ -1,5 +1,10 @@
-A boilerplate project that sets up Electron and Prisma with SQLite3. Additionally, provides sample code for the following use-cases:
+<img src="./src/renderer/assets/icon.png" alt="Electron Forge Prisma" width="150" height="auto" />
 
+A boilerplate project that sets up Electron and Prisma with SQLite3.
+
+Additional features:
+
+- Setting a custom application icon.
 - Web Worker implementation with Electron using IPC handlers to simulate multi-threading.
 - Display a Splash window while connecting to the database.
 - Triggering queries from the renderer using IPC handlers with typescript support.
@@ -16,6 +21,8 @@ A boilerplate project that sets up Electron and Prisma with SQLite3. Additionall
   - On Windows, Python `3.10` or above [is required](https://github.com/nodejs/node-gyp#on-windows).
 - [WiX Toolkit `v3.x`](https://wixtoolset.org/)
   - Required on Windows for building the MSI Installer.
+- [Image Magick `v7.x`](https://imagemagick.org/).
+  - Used to convert PNGs to ICOs for the app icon.
 
 ## Getting Started
 
@@ -55,6 +62,16 @@ Currently, there is an issue with `electron-wix-msi@4` that does not properly la
     "version": "1.0.0" // otherwise this defaults to 1.0.0.0 which is invalid
   }
 }
+```
+
+### Updating Application Icon
+
+The installers only accept an `.ico` file so it must be manually converted from the base `assets/icon.png` image.
+
+[More Info](https://www.electronforge.io/guides/create-and-add-icons#configuring-installer-icons).
+
+```bash
+npm run gen:icon
 ```
 
 ## Contributing

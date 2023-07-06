@@ -25,6 +25,7 @@
     "db:clean": "shx rm -rf node_modules/.prisma && shx rm -rf src/main/prisma/databases/save_0.db && shx rm -rf src/main/prisma/migrations/*_init",
     "db:init": "prisma migrate dev --schema src/main/prisma/schema.prisma --name init",
     "db:reset": "npm run db:clean && npm run db:init",
+    "gen:icon": "magick src/renderer/assets/icon.png -background none -resize 256x256 src/renderer/assets/icon.ico",
     "lint": "eslint --ext .ts,.tsx .",
     "make": "electron-forge make",
     "package": "electron-forge package",

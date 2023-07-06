@@ -20,17 +20,21 @@ module.exports = {
     appBundleId: 'io.prisma.electron-forge',
     appCopyright: 'Copyright © 2023',
     extraResource: ['./node_modules/.prisma', './src/main/prisma/databases'],
+    icon: './src/renderer/assets/icon',
   },
   makers: [
     new MakerWix({
       manufacturer: 'APP',
       appUserModelId: 'io.prisma.electron-forge.exe',
+      icon: './src/renderer/assets/icon.ico',
       version: '1.0.0',
       ui: {
         enabled: true,
       },
     }),
-    new MakerDMG(),
+    new MakerDMG({
+      icon: './src/renderer/assets/icon.ico',
+    }),
   ],
   plugins: [
     new WebpackPlugin({
