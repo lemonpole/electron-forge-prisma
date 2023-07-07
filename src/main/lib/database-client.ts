@@ -2,7 +2,33 @@
  * Exposes a cached version of the Prisma Client
  * via a getter defined in the default export.
  *
- * Allows switching between different SQLite3 databases.
+ * # Usage
+ *
+ * Assuming the following directory structure:
+ *
+ * ```
+ * %APPDATA%/
+ * └── Roaming/
+ *     └── <app>/
+ *         └── databases/
+ *             ├── save_0.db    // DatabaseClient.connect()
+ *             └── save_1.db    // DatabaseClient.connect(1)
+ * ```
+ *
+ * If the provided database identifier is not found, then
+ * the module will create it as a copy of `save_0.db`.
+ *
+ * # Example
+ *
+ * ```js
+ * // connect and do some work
+ * const db1 = DatabaseClient.connect(1);
+ * // <some business logic>
+ *
+ * // disconnect and connect to another SQLite3 database
+ * await DatabaseClient.prisma.$disconnect();
+ * const db2 = DatabaseClient.connect(2);
+ * ```
  *
  * @module
  */
