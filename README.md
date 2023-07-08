@@ -20,8 +20,6 @@ Additional features:
 - [Chakra UI](https://chakra-ui.com/) `v2.x`.
 - SQLite `v5.x`.
   - On Windows, Python `3.10` or above [is required](https://github.com/nodejs/node-gyp#on-windows).
-- [WiX Toolkit `v3.x`](https://wixtoolset.org/)
-  - Required on Windows for building the MSI Installer.
 - [Image Magick `v7.x`](https://imagemagick.org/).
   - Used to convert PNGs to ICOs for the app icon.
 
@@ -50,19 +48,6 @@ Generate platform specific distributables.
 
 ```bash
 npm run make
-```
-
-### WiX MSI
-
-Currently, there is an issue with `electron-wix-msi@4` that does not properly launch the application. The workaround is to force a valid semver string.
-
-```js
-{
-  "name": "@electron-forge/maker-wix",
-  "config": {
-    "version": "1.0.0" // otherwise this defaults to 1.0.0.0 which is invalid
-  }
-}
 ```
 
 ### Updating Application Icon
