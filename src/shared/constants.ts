@@ -14,7 +14,7 @@
  */
 export enum Application {
   DB_NAME_FORMAT = 'save_%s.db',
-  LOGGING_LEVEL = 'error',
+  LOGGING_LEVEL = 'info',
 }
 
 /**
@@ -39,6 +39,12 @@ export enum IPCRoute {
   COUNTRIES_CREATE = '/countries/create',
   DATABASE_CONNECT = '/database/connect',
   DATABASE_DISCONNECT = '/database/disconnect',
+  UPDATER_CHECKING = '/updater/checking',
+  UPDATER_DOWNLOADING = '/updater/downloading',
+  UPDATER_FINISHED = '/updater/finished',
+  UPDATER_INSTALL = '/updater/install',
+  UPDATER_NO_UPDATE = '/updater/noUpdate',
+  UPDATER_START = '/updater/start',
   WINDOW_CLOSE = '/window/close',
   WINDOW_SEND = '/window/send',
   WINDOW_OPEN = '/window/open',

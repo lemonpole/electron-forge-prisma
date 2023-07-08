@@ -35,6 +35,11 @@ export default {
     connect: (id?: string) => ipcRenderer.invoke(IPCRoute.DATABASE_CONNECT, id),
     disconnect: () => ipcRenderer.invoke(IPCRoute.DATABASE_DISCONNECT),
   },
+  updater: {
+    install: () => ipcRenderer.send(IPCRoute.UPDATER_INSTALL),
+    on: (eventName: string, cb: () => void) => ipcRenderer.on(eventName, cb),
+    start: () => ipcRenderer.send(IPCRoute.UPDATER_START),
+  },
   window: {
     close: (id: string) => ipcRenderer.send(IPCRoute.WINDOW_CLOSE, id),
     open: (id: string) => ipcRenderer.send(IPCRoute.WINDOW_OPEN, id),

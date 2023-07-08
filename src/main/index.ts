@@ -56,6 +56,14 @@ function handleOnActivate() {
  * @function anonymous
  */
 (async () => {
+  // stop squirrel from launching multiple instances of
+  // the app when installing, updating or uninstalling
+  //
+  // @see https://www.electronforge.io/config/makers/squirrel.windows#handling-startup-events
+  if (require('electron-squirrel-startup')) {
+    app.quit();
+  }
+
   // control logging level via environment variable.
   if (process.env.LOG_LEVEL) {
     log.transports.console.level = process.env.LOG_LEVEL as log.LevelOption;

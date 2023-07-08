@@ -10,20 +10,32 @@ import type { Engine, IOptions, RecursivePartial } from 'tsparticles-engine';
 import { Particles } from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
 import { loadSnowPreset } from 'tsparticles-preset-snow';
-import { WindowIdentifier } from '@app/shared/constants';
+import { IPCRoute, WindowIdentifier } from '@app/shared/constants';
 import { sleep } from '@app/shared/util';
 import { appTheme } from '@app/renderer/lib';
 import { ChakraRoot } from '@app/renderer/components';
 import { Center, ThemeConfig, extendTheme } from '@chakra-ui/react';
 
 /**
- * Status messages
+ * Database status messages.
  *
  * @enum
  */
-enum Status {
+enum DatabaseStatus {
   Connecting = 'Connecting to database...',
   Connected = 'Connected.',
+}
+
+/**
+ * Updater status messages.
+ *
+ * @enum
+ */
+enum UpdaterStatus {
+  Checking = 'Checking for updates...',
+  Downloading = 'Downloading update...',
+  Finished = 'Download finished.',
+  NoUpdates = 'No updates available.',
 }
 
 /**
@@ -66,22 +78,61 @@ const themeConfig: ThemeConfig = {
  * @component
  */
 function Index() {
-  const [status, setStatus] = React.useState(Status.Connecting);
+  const [status, setStatus] = React.useState<DatabaseStatus | UpdaterStatus>(
+    UpdaterStatus.Checking
+  );
 
+  // the updater is heavily event-driven so wrap it in a promise
+  // to hold the app here while it runs through its lifecycle
   React.useEffect(() => {
-    api.database
-      .connect()
+    sleep(2000).then(
+      () =>
+        new Promise((resolve) => {
+          api.updater.start();
+          api.updater.on(IPCRoute.UPDATER_NO_UPDATE, () =>
+            resolve(setStatus(UpdaterStatus.NoUpdates))
+          );
+          api.updater.on(IPCRoute.UPDATER_DOWNLOADING, () => setStatus(UpdaterStatus.Downloading));
+          api.updater.on(IPCRoute.UPDATER_FINISHED, () =>
+            resolve(setStatus(UpdaterStatus.Finished))
+          );
+        })
+    );
+  }, []);
+
+  // if there was an update download then
+  // trigger a restart of the application
+  React.useEffect(() => {
+    if (status !== UpdaterStatus.Finished) {
+      return;
+    }
+
+    api.updater.install();
+  }, [status]);
+
+  // if no updates were downloaded, we can
+  // proceed connecting to the database
+  React.useEffect(() => {
+    if (status !== UpdaterStatus.NoUpdates) {
+      return;
+    }
+
+    sleep(2000)
+      .then(() => {
+        setStatus(DatabaseStatus.Connecting);
+        return sleep(2000);
+      })
+      .then(() => api.database.connect())
       .then(() => sleep(2000))
       .then(() => {
-        setStatus(Status.Connected);
-        return Promise.resolve();
+        return Promise.resolve(setStatus(DatabaseStatus.Connected));
       })
       .then(() => sleep(2000))
       .then(() => {
         api.window.open(WindowIdentifier.Main);
         api.window.close(WindowIdentifier.Splash);
       });
-  }, []);
+  }, [status]);
 
   // initialize particles engine
   const particlesInit = React.useCallback(async (engine: Engine) => {

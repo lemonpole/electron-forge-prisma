@@ -5,7 +5,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { MakerWix } = require('@electron-forge/maker-wix');
+const { MakerSquirrel } = require('@electron-forge/maker-squirrel');
 const { MakerDMG } = require('@electron-forge/maker-dmg');
 const { WebpackPlugin } = require('@electron-forge/plugin-webpack');
 
@@ -23,14 +23,8 @@ module.exports = {
     icon: './src/renderer/assets/icon',
   },
   makers: [
-    new MakerWix({
-      manufacturer: 'APP',
-      appUserModelId: 'io.prisma.electron-forge.exe',
-      icon: './src/renderer/assets/icon.ico',
-      version: '1.0.0',
-      ui: {
-        enabled: true,
-      },
+    new MakerSquirrel({
+      setupIcon: './src/renderer/assets/icon.ico',
     }),
     new MakerDMG({
       icon: './src/renderer/assets/icon.ico',

@@ -4,9 +4,10 @@ A boilerplate project that sets up Electron and Prisma with SQLite3.
 
 Additional features:
 
+- Auto updates support via [Electron autoUpdater](https://www.electronjs.org/docs/latest/tutorial/updates).
+- Display a splash window while updating and connecting to the database.
 - Setting a custom application icon.
 - Web Worker implementation with Electron using IPC handlers to simulate multi-threading.
-- Display a Splash window while connecting to the database.
 - Triggering queries from the renderer using IPC handlers with typescript support.
 - Creating a custom Prisma seeder.
 

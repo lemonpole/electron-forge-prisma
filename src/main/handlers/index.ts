@@ -9,6 +9,7 @@ import { app, ipcMain } from 'electron';
 import { IPCRoute } from '@app/shared/constants';
 export { default as IPCDatabaseHandler } from './database';
 export { default as IPCWIndowHandler } from './window';
+export { default as IPCUpdaterHandler } from './updater';
 
 /**
  * Register the IPC event handlers.
