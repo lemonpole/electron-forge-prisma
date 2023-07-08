@@ -51,6 +51,9 @@ export default function () {
     autoUpdater.on('update-downloaded', () => event.reply(IPCRoute.UPDATER_FINISHED));
 
     // error event handler
-    autoUpdater.on('error', (message) => log.error(message));
+    autoUpdater.on('error', (message) => {
+      log.error(message);
+      event.reply(IPCRoute.UPDATER_NO_UPDATE);
+    });
   });
 }
