@@ -19,7 +19,7 @@ module.exports = {
   packagerConfig: {
     appBundleId: 'io.prisma.electron-forge',
     appCopyright: 'Copyright © 2023',
-    extraResource: ['./node_modules/.prisma', './src/main/prisma/databases'],
+    extraResource: ['./src/main/prisma/databases'],
     icon: './src/renderer/assets/icon',
   },
   makers: [
