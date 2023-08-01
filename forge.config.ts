@@ -3,18 +3,18 @@
  *
  * @module
  */
-
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { MakerSquirrel } = require('@electron-forge/maker-squirrel');
-const { MakerDMG } = require('@electron-forge/maker-dmg');
-const { WebpackPlugin } = require('@electron-forge/plugin-webpack');
+import type { ForgeConfig } from '@electron-forge/shared-types';
+import { MakerDMG } from '@electron-forge/maker-dmg';
+import { MakerSquirrel } from '@electron-forge/maker-squirrel';
+import { WebpackPlugin } from '@electron-forge/plugin-webpack';
+import { ElectronMainWebpackConfig, ElectronRendererWebpackConfig } from './webpack.config';
 
 /**
- * Exports this module.
+ * Electron Forge main configuration object.
  *
- * @exports
+ * @constant
  */
-module.exports = {
+const config: ForgeConfig = {
   buildIdentifier: 'alpha',
   packagerConfig: {
     appBundleId: 'io.prisma.electron-forge',
@@ -32,9 +32,9 @@ module.exports = {
   ],
   plugins: [
     new WebpackPlugin({
-      mainConfig: './webpack/webpack.main.config.js',
+      mainConfig: ElectronMainWebpackConfig,
       renderer: {
-        config: './webpack/webpack.renderer.config.js',
+        config: ElectronRendererWebpackConfig,
         entryPoints: [
           {
             html: './src/renderer/assets/index.html',
@@ -63,3 +63,10 @@ module.exports = {
     }),
   ],
 };
+
+/**
+ * Exports this module.
+ *
+ * @exports
+ */
+export default config;

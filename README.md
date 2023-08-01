@@ -16,7 +16,7 @@ Additional features:
 - Node `v18.15.x`.
 - Electron `v25.x`.
 - Electron Forge `v6.x`.
-- [Prisma ORM](https://www.prisma.io/) `4.16.x`.
+- [Prisma ORM](https://www.prisma.io/) `5.1.x`.
 - [Chakra UI](https://chakra-ui.com/) `v2.x`.
 - SQLite `v5.x`.
   - On Windows, Python `3.10` or above [is required](https://github.com/nodejs/node-gyp#on-windows).
